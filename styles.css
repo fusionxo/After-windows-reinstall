@@ -1,0 +1,85 @@
+body, h1, h2, ul, li {
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    background: radial-gradient(circle at top center, #292f38, #000);
+    color: #fff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    overflow-y: auto;
+    position: relative;
+  }
+  
+  .cursor-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: cyan;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9999;
+    transition: background-color 0.3s;
+  }
+  
+  .cursor-dot.clicked {
+    background-color: red;
+  }
+  
+  .cursor-dot.hovered {
+    background-color: green;
+  }
+
+.cursor-dot.scrolling {
+    width:5px;height:5px;opacity:.5
+    }  
+  
+  header {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  main {
+    padding: 20px;
+  }
+  
+  .category {
+    margin-bottom: 20px;
+  }
+  
+  .category h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .software-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .software-button {
+    background-color: #007bff;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+  }
+  
+  .software-button:hover {
+    background-color: #0056b3;
+    color: #fff;
+    transform: scale(1.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+  
