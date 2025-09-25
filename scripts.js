@@ -3,7 +3,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const cursorDot = document.createElement("div");
   cursorDot.classList.add("cursor-dot");
   document.body.appendChild(cursorDot);
+  const searchBar = document.getElementById("search-bar");
+  const categoryContainers = document.querySelectorAll(".category-container");
 
+  // --- Cursor Dot Logic ---
   document.addEventListener("mousemove", (e) => {
     const x = e.clientX;
     const y = e.clientY;
@@ -17,23 +20,16 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  document.addEventListener("mouseup", function (e) {
+  document.addEventListener("mouseup", function () {
     cursorDot.classList.remove("clicked");
   });
 
+  // --- Software Button Interaction ---
   softwareButtons.forEach((button) => {
     button.addEventListener("click", function (e) {
       e.preventDefault();
-
-      cursorDot.classList.add("clicked");
-      setTimeout(() => {
-        cursorDot.classList.remove("clicked");
-      }, 100);
-
       const link = button.getAttribute("data-link");
-      smoothScrollToTop(() => {
-        window.location.href = link;
-      });
+      window.open(link, '_blank'); // Open in new tab
     });
 
     button.addEventListener("mouseenter", function () {
@@ -45,31 +41,29 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  function smoothScrollToTop(callback) {
-    const start = window.scrollY || window.pageYOffset;
-    const target = 0;
-    const distance = target - start;
-    const duration = 0;
-    const startTime = performance.now();
+  // --- Search Bar Functionality ---
+  searchBar.addEventListener("input", () => {
+    const searchTerm = searchBar.value.toLowerCase();
 
-    function easeInOutQuad(time, start, distance, duration) {
-      time /= duration / 2;
-      if (time < 1) return (distance / 2) * time * time + start;
-      time--;
-      return (-distance / 2) * (time * (time - 2) - 1) + start;
-    }
+    categoryContainers.forEach(container => {
+      let hasVisibleButton = false;
+      const buttons = container.querySelectorAll(".software-button");
 
-    function scroll(timestamp) {
-      const currentTime = timestamp - startTime;
-      const newPos = easeInOutQuad(currentTime, start, distance, duration);
-      window.scrollTo(0, newPos);
-      if (currentTime < duration) {
-        requestAnimationFrame(scroll);
+      buttons.forEach(button => {
+        const buttonText = button.textContent.toLowerCase();
+        if (buttonText.includes(searchTerm)) {
+          button.classList.remove("hidden");
+          hasVisibleButton = true;
+        } else {
+          button.classList.add("hidden");
+        }
+      });
+
+      if (hasVisibleButton) {
+        container.classList.remove("hidden");
       } else {
-        callback();
+        container.classList.add("hidden");
       }
-    }
-
-    requestAnimationFrame(scroll);
-  }
+    });
+  });
 });
